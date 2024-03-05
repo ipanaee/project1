@@ -56,6 +56,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopping App',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.yellow, // Set background color to yellow
+        colorScheme: ColorScheme.light(
+          primary: Colors.blue, // Change the primary color
+          secondary: Colors.orange, // Change the accent color
+        ),
+      ),
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(appState: appState),
@@ -85,7 +92,8 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Padding(
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -147,21 +155,25 @@ class ProductHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: appState.products.length,
-        itemBuilder: (context, index) {
-          final product = appState.products[index];
-          return ListTile(
-            title: Text(product.name),
-            subtitle: Text('\$${product.price.toString()}'),
-            trailing: IconButton(
-              icon: Icon(Icons.add_shopping_cart),
-              onPressed: () {
-                appState.addToCart(product);
-              },
-            ),
-          );
-        },
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: appState.products.length,
+          itemBuilder: (context, index) {
+            final product = appState.products[index];
+            return ListTile(
+              title: Text(product.name),
+              subtitle: Text('\$${product.price.toString()}'),
+              trailing: IconButton(
+                icon: Icon(Icons.add_shopping_cart),
+                onPressed: () {
+                  appState.addToCart(product);
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -178,19 +190,23 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Shopping Cart'),
       ),
-      body: appState.cart.products.isEmpty
-          ? Center(
-        child: Text('Your cart is empty.'),
-      )
-          : ListView.builder(
-        itemCount: appState.cart.products.length,
-        itemBuilder: (context, index) {
-          final product = appState.cart.products[index];
-          return ListTile(
-            title: Text(product.name),
-            subtitle: Text('\$${product.price.toString()}'),
-          );
-        },
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        padding: const EdgeInsets.all(16.0),
+        child: appState.cart.products.isEmpty
+            ? Center(
+          child: Text('Your cart is empty.'),
+        )
+            : ListView.builder(
+          itemCount: appState.cart.products.length,
+          itemBuilder: (context, index) {
+            final product = appState.cart.products[index];
+            return ListTile(
+              title: Text(product.name),
+              subtitle: Text('\$${product.price.toString()}'),
+            );
+          },
+        ),
       ),
     );
   }
